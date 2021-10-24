@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Analizador {
 	
@@ -35,145 +36,153 @@ public class Analizador {
 			}
 	}
 
-	private static final long[] p = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
+	private static final double[] n = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
 			100,300,500,700,1000,3000,5000,7000,10000,30000,50000,70000,
 			100000,200000,300000,500000,700000,800000,850000,900000,950000,
-			1000000,1500000,2000000,2500000,3000000,3500000,5000000,7000000,
-			10000000,30000000,50000000,800000000,90000000,
-			100000000,500000000,999999999};
+			1000000,1500000,2000000,2500000,3000000,3500000,5000000,7000000};
 
-	private static final double[] uno={421800,800,300,400,300,300,300,300,300,300,300,300,
-			200,300,300,300,300,500,300,300,300,200,300,400,300,300,300,300,300,300,200,
-			200,300,300,300,300,300,300,300,300,300,300,300,300,300,200,200,300,300,300,
-			300,200,300,300,300,300,300,300,300,300,300,700,300
-	};
-	//Tiempos para complejidad uno
+	private static double[] tiempos = {};
+	private static double[] ratio = {};
 
-	private static final long[] logn={510800,1000,500,400,300,400,300,300,300,300,300,300,400,
-			400,700,500,400,400,400,300,300,700,500,500,500,400,600,700,700,700,500,500,500,500,
-			500,500,500,500,500,500,500,500,400,400,500,500,400,500,500,500,600,600,500,500,500,500,
-			600,500,600,600,500,1000,500
-	};
-	//Tiempos para complejidad logn
+	public static boolean esGrande(){ //ignora los primeros valores
+		double media1=0;
+		double media2=0;
+		boolean esNF=false;
+		Temporizador t = new Temporizador();
 
-	private static final double[] n={471300,1000,1100,600,500,500,700,500,400,400,300,400,400,500,500,500,500,500,600,
-			500,600,700,700,700,900,1000,1200,3500,3900,6000,15800,46800,59800,57000,78800,225700,671000,598400,596200,
-			555000,109600,174800,298500,365700,363000,743300,423300,441400,686600,867000,1075300,1295100,1673600,2236100,3311200,
-			4293200,13935300,24203900,352435100,41514500,46293800,226431600,439615300
-	};
-	//Tiempos para complejidad n
+		int tam=12;
 
-	private static final long[] n2={329800,1100,600,600,600,700,900,1000,1100,1300,1600,2100,4000,3000,3600,4900,4900,
-			6300,7000,8100,13200,20600,29400,39400,50400,63900,78400,705100,1896100,699500,347000,3021200,10790100,21128900,
-			44044300,398378100,1093916400,2104804500};
-	//Tiempos para complejidad n2
+		for(int i = 0;i<tam;i++){
+			t.iniciar();
+			Complejidad.nf(n[i]);
+			t.parar();
+			tiempos[i]=t.tiempoPasado();
+			System.out.println(t.tiempoPasado());
+			if(i!=0)System.out.println(t.tiempoPasado()/tiempos[i-1]);
 
-	private static final double[] n3={334200,1800,1200,1200,1400,1800,2400,3200,6500,6800,8400,13500,18900,26500,
-			35600,46500,59700,75300,93500,113100,263900,280700,171800,226200,341800,482800,660900,3865400,
-			11118700,31096700,92011900};
-	//Tiempos para complejidad n3
+			if(i!=0) {
+				if ((t.tiempoPasado() / tiempos[i - 1]) > 10) {
+					i = tam;
+					esNF = true;
+				}
+			}
 
-	private static final double[] e2n={369600,1500,1300,1700,2800,6300,16700,20400,39600,79500,
-			422400,1360600,2293000,3669700,13692300,54747600,222822500,917437600};
-	//Tiempos para complejidad 2n
+			t.reiniciar();
+		}
 
-	private static final double[] nf={333000,1400,1200,3500,19500,84100,630800,3265800,4843900,59017900};
-	//Tiempos para complejidad nf
+		if(!esNF) {
 
-	private static final double[] nlogn={371300,4600,2500,2300,2800,3000,3500,3700,5900,5200,6300,14500,9900,11800,12400,146100,4300,
-			3800,3900,245700,14700,8100,10100,11000,12700,13900,15500,106300,84900,119600,170800,549900,
-			923000,1539300,1172800,3415700,4492500,5521600,8299500,16716400,23850500,43099700,60831100,69981500,
-			79897900,79201200,81651800,88957300,141066600,183230700,223651100,274510100,317492900,463982300,662904200,
-			964047000};
-	//Tiempos para complejidad nlogn
+			for (int i = 2; i <= (tam / 2); i++) {
+				media1 += tiempos[i];
+			}
+			for (int i = ((tam / 2) + 1); i < tam; i++) {
+				media2 += tiempos[i];
+			}
 
-	private static double[] ratioUno={};
-	private static double[] ratioLogn={};
-	private static double[] ratioN={};
-	private static double[] ratioNlogn={};
-	private static double[] ratioN2={};
-	private static double[] ratioN3={};
-	private static double[] ratio2N={};
-	private static double[] ratioNf={};
+
+			double Mmedia = media2 / media1;
+			System.out.println(Mmedia);
+			if ((media2 / media1) < 1.7) {
+				return false;
+			} else {
+				if (Mmedia < 3.5) {
+					System.out.print("NLOG o N2");
+				} else if (Mmedia < 8) {
+					System.out.print("N3");
+				} else {
+					System.out.print("2N");
+				}
+
+				return true;
+			}
+
+		}
+		System.out.print("NF");
+		return true;
+	}
+
+	public static double media(double V[]){  //ignora el primer valor
+		double media=0;
+		for(int i = 1;i<V.length;i++){
+			media+=V[i];
+		}
+		return media/(V.length-1);
+
+	}
+
+	// uno-media -> 380<
+	// logn-media -> 1200<
+	// n-media -> 100000<
+	// nlogn-media -> resto
+
+	// n2-esGrande -> 1.7>
+	// nlogn-esGrande -> 1.7>
+	// n3-esGrande -> 3,5>
+	// 2n-esGrande -> 8>
+	// nf-esGrande -> no termina
 
 	public static void main(String arg[]) {
-		ratioUno=new double[63];
-		ratioLogn=new double[63];
-		ratioN=new double[63];
-		ratioNlogn=new double[63];
 
 
-		double mRatioUno = 0;
-		double mRatioN = 0;
-		double mRatioNlogn = 0;
-		double mRatioLogn = 0;
+		tiempos=new double[63];
+		double media=0;
+		Temporizador t = new Temporizador();
 
+		if(!esGrande()) {
+
+			for (int i = 0; i < n.length; i++) {
+				t.iniciar();
+				Complejidad.n3(n[i]);
+				t.parar();
+				tiempos[i] = t.tiempoPasado();
+				t.reiniciar();
+			}
+
+
+			media=media(tiempos);
+			System.out.println(media);
+			if(media<180){
+				System.out.print("1");
+			}else if(media<1200){
+				System.out.print("LOGN");
+			}else if(media<1000000){
+				System.out.print("N");
+			}else{
+				System.out.print("NLOGN");
+			}
+		}
+
+
+
+	/*
+		tiempos=new double[63];
+
+		double ratio=0;
 
 		Temporizador t = new Temporizador();
-		for(int i=0;i<63;i++) {
+
+		for(int i = 0;i<n.length;i++){
 			t.iniciar();
-			algo.f(p[i]);
+			Complejidad.uno(n[i]);
 			t.parar();
-			ratioUno[i]=t.tiempoPasado()/uno[i];
+			tiempos[i]=t.tiempoPasado();
 			t.reiniciar();
-		} //compara con c-1
-
-		for(int i=0;i<ratioUno.length;i++){
-			mRatioUno+=ratioUno[i];
 		}
-		mRatioUno=mRatioUno/(ratioUno.length);
 
-		System.out.println(mRatioUno);
+		tiempos.
 
+		System.out.println("\n");
+		ratio=0;
 
-		for(int i=0;i<63;i++) {
+		for(int i = 0;i<n.length;i++){
 			t.iniciar();
-			algo.f(p[i]);
+			Complejidad.logn(n[i]);
 			t.parar();
-			ratioLogn[i]=t.tiempoPasado()/logn[i];
+			System.out.print(" "+t.tiempoPasado());
 			t.reiniciar();
-		} //compara con c-1
-
-		for(int i=0;i<ratioLogn.length;i++){
-			mRatioLogn+=ratioLogn[i];
 		}
-		mRatioLogn=mRatioLogn/(ratioLogn.length);
 
-		System.out.println(mRatioLogn+"\n");
-
-
-		for(int i=0;i<63;i++) {
-			t.iniciar();
-			algo.f(p[i]);
-			t.parar();
-			ratioN[i]=t.tiempoPasado()/n[i];
-			t.reiniciar();
-		} //compara con c-n
-
-		for(int i=0;i<ratioUno.length;i++){
-			mRatioN+=ratioN[i];
-		}
-		mRatioN=mRatioN/(ratioN.length);
-
-		System.out.println("\n"+mRatioN);
-
-		for(int i=0;i<nlogn.length;i++) {
-			t.iniciar();
-			algo.f(p[i]);
-			t.parar();
-			ratioNlogn[i]=t.tiempoPasado()/nlogn[i];
-			t.reiniciar();
-		} //compara con c-nlogn
-
-		for(int i=0;i<ratioNlogn.length;i++){
-			mRatioNlogn+=ratioNlogn[i];
-		}
-		mRatioNlogn=mRatioNlogn/(ratioNlogn.length);
-
-		System.out.println("\n"+mRatioNlogn);
-
-
-
+		System.out.println(ratio/n.length);
 
 		/*int n1 = 100000;
 		int n2 = 200000;
@@ -207,10 +216,9 @@ public class Analizador {
 			
 			t.reiniciar();
 		}
-		
+		*/
 	
 		//double ratio = (double)t2/t1;
-		System.out.println("T1: "+Arrays.toString(v1)+"\nT2: "+Arrays.toString(v2));
 		//System.out.println(masCercano(ratio));*/
 	}
 }

@@ -1,32 +1,32 @@
 public class Complejidad {
 
-    public static void uno(long n){
+    public static void uno(double n){
         for(int i=0;i<10;i++){
 
         }
     }
 
-    public static void logn(long n){
+    public static void logn(double n){
         int c= 1;
         while (c < n) {
             c= 2*c;
         }
     }
 
-    public static void n(long n){
+    public static void n(double n){
         for(int i=0; i<n;i++){
 
         }
     }
 
-    public static void n2(long n) {
+    public static void n2(double n) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
             }
         }
     }
 
-    public static void n3(long n){
+    public static void n3(double n){
         int[] a = new int[(int) n];
         int suma = 0;
         int suma2 = 0;
@@ -42,7 +42,7 @@ public class Complejidad {
         }
     }
 
-    public static synchronized int e2n(int x, long n) {
+    public static synchronized int e2n(int x, double n) {
         if (n == 0) {
             return 1;
 
@@ -51,7 +51,7 @@ public class Complejidad {
         }
     }
 
-    public static synchronized long nf(long n) {
+    public static synchronized double nf(double n) {
         for(int i = 0; i < n; i++) {
             nf(n-1);
         }
@@ -61,7 +61,7 @@ public class Complejidad {
 
     private static int[] a;
     private static int n;
-    public static synchronized void nlogn(long n) {
+    public static synchronized void nlogn(double n) {
         int[] a = new int[(int) n];
 
         for(int i = a.length-1; i >= 0; i--) {
