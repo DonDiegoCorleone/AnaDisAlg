@@ -85,7 +85,7 @@ public class Analizador {
 
 			double Mmedia = media2 / media1;
 
-			if ((media2 / media1) < 1.5) {
+			if ((media2 / media1) < 1.7) {
 				return false;
 			} else {
 				if (Mmedia < 4) {
@@ -99,7 +99,7 @@ public class Analizador {
 					}
 
 					double mediaN=media(tiempos);
-					if(mediaN<100000){
+					if(mediaN<65000){
 						System.out.println("NLOGN");
 					}else{
 						System.out.println("N2");
@@ -160,82 +160,12 @@ public class Analizador {
 			media=media(tiempos);
 			if(media<180){
 				System.out.print("1");
-			}else if(media<1200){
+			}else if(media<10000){
 				System.out.print("LOGN");
-			}else if(media<1000000){
-				System.out.print("N");
 			}else{
-				System.out.print("NLOGN");
+				System.out.print("N");
 			}
 		}
 
-
-
-	/*
-		tiempos=new double[63];
-
-		double ratio=0;
-
-		Temporizador t = new Temporizador();
-
-		for(int i = 0;i<n.length;i++){
-			t.iniciar();
-			Complejidad.uno(n[i]);
-			t.parar();
-			tiempos[i]=t.tiempoPasado();
-			t.reiniciar();
-		}
-
-		tiempos.
-
-		System.out.println("\n");
-		ratio=0;
-
-		for(int i = 0;i<n.length;i++){
-			t.iniciar();
-			Complejidad.logn(n[i]);
-			t.parar();
-			System.out.print(" "+t.tiempoPasado());
-			t.reiniciar();
-		}
-
-		System.out.println(ratio/n.length);
-
-		/*int n1 = 100000;
-		int n2 = 200000;
-		
-		v1=new long[20];
-		v2=new long[20];
-	
-		int tn1=0;
-		Temporizador t = new Temporizador();
-		while(tn1<20) {
-			
-			t.iniciar();
-			algo.f(n1);
-			t.parar();
-
-			v1[tn1]=t.tiempoPasado();
-			tn1++;
-			
-			t.reiniciar();
-		}
-		
-		int tn2=0;
-		while(tn2<20) {
-			
-			t.iniciar();
-			algo.f(n2);
-			t.parar();
-
-			v2[tn2]=t.tiempoPasado();
-			tn2++;
-			
-			t.reiniciar();
-		}
-		*/
-	
-		//double ratio = (double)t2/t1;
-		//System.out.println(masCercano(ratio));*/
 	}
 }

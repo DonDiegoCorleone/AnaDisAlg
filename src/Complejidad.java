@@ -14,8 +14,10 @@ public class Complejidad {
     }
 
     public static void n(double n){
+        int p=0;
         for(int i=0; i<n;i++){
-
+            p=2*3*6*4*5*7;
+            p+=2*4*53*6;
         }
     }
 
