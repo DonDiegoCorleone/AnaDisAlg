@@ -36,10 +36,14 @@ public class Analizador {
 			}
 	}
 
-	private static final double[] n = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
+	private static final long[] n = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
 			100,300,500,700,1000,3000,5000,7000,10000,30000,50000,70000,
 			100000,200000,300000,500000,700000,800000,850000,900000,950000,
 			1000000,1500000,2000000,2500000,3000000,3500000,5000000,7000000};
+
+
+	private static final long[] n2 = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
+			100,300,500,700,1000,3000,5000,7000};
 
 	private static double[] tiempos = {};
 	private static double[] ratio = {};
@@ -54,11 +58,10 @@ public class Analizador {
 
 		for(int i = 0;i<tam;i++){
 			t.iniciar();
-			Complejidad.nf(n[i]);
+			Algoritmo.f(n[i]);
 			t.parar();
 			tiempos[i]=t.tiempoPasado();
-			System.out.println(t.tiempoPasado());
-			if(i!=0)System.out.println(t.tiempoPasado()/tiempos[i-1]);
+
 
 			if(i!=0) {
 				if ((t.tiempoPasado() / tiempos[i - 1]) > 10) {
@@ -81,12 +84,27 @@ public class Analizador {
 
 
 			double Mmedia = media2 / media1;
-			System.out.println(Mmedia);
-			if ((media2 / media1) < 1.7) {
+
+			if ((media2 / media1) < 1.5) {
 				return false;
 			} else {
-				if (Mmedia < 3.5) {
-					System.out.print("NLOG o N2");
+				if (Mmedia < 4) {
+
+					for (int i = 0; i < n2.length; i++) {
+						t.iniciar();
+						Algoritmo.f(n2[i]);
+						t.parar();
+						tiempos[i] = t.tiempoPasado();
+						t.reiniciar();
+					}
+
+					double mediaN=media(tiempos);
+					if(mediaN<100000){
+						System.out.println("NLOGN");
+					}else{
+						System.out.println("N2");
+					}
+
 				} else if (Mmedia < 8) {
 					System.out.print("N3");
 				} else {
@@ -132,7 +150,7 @@ public class Analizador {
 
 			for (int i = 0; i < n.length; i++) {
 				t.iniciar();
-				Complejidad.n3(n[i]);
+				Algoritmo.f(n[i]);
 				t.parar();
 				tiempos[i] = t.tiempoPasado();
 				t.reiniciar();
@@ -140,7 +158,6 @@ public class Analizador {
 
 
 			media=media(tiempos);
-			System.out.println(media);
 			if(media<180){
 				System.out.print("1");
 			}else if(media<1200){
