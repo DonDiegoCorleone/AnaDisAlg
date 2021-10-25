@@ -39,14 +39,13 @@ public class Analizador {
 	private static final long[] n = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
 			100,300,500,700,1000,3000,5000,7000,10000,30000,50000,70000,
 			100000,200000,300000,500000,700000,800000,850000,900000,950000,
-			1000000,1500000,2000000,2500000,3000000,3500000,5000000,7000000};
+			1000000,1500000,2000000,2500000,3000000,3500000,5000000,7000000};  //vector para medir tiempos con complejidades pequeñas
 
 
 	private static final long[] n2 = {1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,
-			100,300,500,700,1000,3000,5000,7000};
+			100,300,500,700,1000,3000,5000,7000}; //vector para medir tiempos para diferenciar N2 y NLOGN
 
 	private static double[] tiempos = {};
-	private static double[] ratio = {};
 
 	public static boolean esGrande(){ //ignora los primeros valores
 		double media1=0;
@@ -56,16 +55,16 @@ public class Analizador {
 
 		int tam=12;
 
-		for(int i = 0;i<tam;i++){
-			t.iniciar();
+		for(int i = 0;i<tam;i++){ //bucle que mide los 10 primeros tiempos porque si es una complejidad muy grande con el vector n no acabaría nunca, en
+			t.iniciar();  // cambio con los 10 primeros valores, que ademas son pequeños, nos puede dar una respuesta sobre si será una complejidad muy grande o pequeña
 			Algoritmo.f(n[i]);
 			t.parar();
 			tiempos[i]=t.tiempoPasado();
 
 
 			if(i!=0) {
-				if ((t.tiempoPasado() / tiempos[i - 1]) > 10) {
-					i = tam;
+				if ((t.tiempoPasado() / tiempos[i - 1]) > 10) { //si la pendiente de los tiempos es
+					i = tam;								// mayor que 10 será de complejidad NF
 					esNF = true;
 				}
 			}
@@ -75,8 +74,8 @@ public class Analizador {
 
 		if(!esNF) {
 
-			for (int i = 2; i <= (tam / 2); i++) {
-				media1 += tiempos[i];
+			for (int i = 2; i <= (tam / 2); i++) { //suma los 5 primeros tiempos
+				media1 += tiempos[i];			// y los divide entre los 5 últimos
 			}
 			for (int i = ((tam / 2) + 1); i < tam; i++) {
 				media2 += tiempos[i];
@@ -85,10 +84,10 @@ public class Analizador {
 
 			double Mmedia = media2 / media1;
 
-			if ((media2 / media1) < 1.7) {
+			if ((media2 / media1) < 1.7) {  //si supera 1.7 será de complejidad mayor a n
 				return false;
 			} else {
-				if (Mmedia < 4) {
+				if (Mmedia < 4) { //segun como sea la media sera de una complejidad u otra
 
 					for (int i = 0; i < n2.length; i++) {
 						t.iniciar();
@@ -119,7 +118,7 @@ public class Analizador {
 		return true;
 	}
 
-	public static double media(double V[]){  //ignora el primer valor
+	public static double media(double V[]){  //ignora el primer valor debido a que siempre es muy alto
 		double media=0;
 		for(int i = 1;i<V.length;i++){
 			media+=V[i];
@@ -146,7 +145,7 @@ public class Analizador {
 		double media=0;
 		Temporizador t = new Temporizador();
 
-		if(!esGrande()) {
+		if(!esGrande()) { //si no es grande entonces la complejidad seá menor o igual a n
 
 			for (int i = 0; i < n.length; i++) {
 				t.iniciar();
@@ -157,7 +156,7 @@ public class Analizador {
 			}
 
 
-			media=media(tiempos);
+			media=media(tiempos); //se hace la media de los tiempos y se clasifican segun su valor
 			if(media<180){
 				System.out.print("1");
 			}else if(media<10000){
