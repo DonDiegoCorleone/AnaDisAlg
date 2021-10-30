@@ -4,75 +4,58 @@ import java.util.List;
 
 public class OrdenarLista_Merge {
 
-    public static void mezclar(int v_izq[], int v_der[]){
+    public static void mezclar(int []v,int ini,int med,int fin){
 
-
-        if(v_der.length==1 && v_izq.length==1){
-            if(v_der[0]<v_izq[0]){
-                System.out.println("["+v_der[0]+","+v_izq[0]+"]");
-            }else {
-                System.out.println("[" + v_izq[0] + "," + v_der[0] + "]");
+        int [] aux = new int[fin-ini+1];
+        int i=ini;
+        int j=med+1;
+        int k=0; //contador de auxiliar
+        while(i<=med && j<=fin) {
+            if (v[i] > v[j]) {
+                aux[k]=v[j];
+                j++;
+            } else {
+                aux[k]=v[i];
+                i++;
             }
-        }else{
-
-            List<Integer> aux = new ArrayList<Integer>();
-
-            int i=0;
-            int j=0;
-
-            while(i<v_izq.length && j<v_der.length) {
-
-                if (i == v_izq.length || j == v_der.length) {
-                    if (i == v_izq.length) {
-                        while (j < v_der.length) {
-                            aux.add(v_der[j]);
-                            j++;
-                        }
-                    }
-                    if (j == v_der.length) {
-                        while (i < v_izq.length) {
-                            aux.add(v_izq[i]);
-                            i++;
-                        }
-                    }
-                } else {
-
-                    if (v_izq[i] > v_der[j]) {
-                        aux.add(v_der[j]);
-                        j++;
-                    } else {
-                        aux.add(v_izq[i]);
-                        i++;
-                    }
-                }
-            }
-            System.out.println(aux.toString());
+            k++;
+        }
+        while(i<=med){
+            aux[k]=v[i];
+            i++;
+            k++;
+        }
+        while(j<=fin){
+            aux[k]=v[j];
+            j++;
+            k++;
         }
 
+        k=0;
+        System.out.print("\n");
 
+        for (int f=ini; f<=fin; f++){
+            v[f] = aux[k];k++;
+            System.out.print(v[f]);
+        }
     }
 
 
-        public static void Ordenar_Merge(int v[]){
+        public static void Ordenar_Merge(int v[],int ini,int fin){
 
-            int p=0;
-            int u=v.length;
-            if(v.length>=2) { //si la lista tiene solo un elemento ya está ordenada
+            if(ini<fin) { //si la lista tiene solo un elemento ya está ordenada
 
-                int v_izq[]=Arrays.copyOfRange(v,p,(int)Math.floor((u/2)));
-                int v_der[]=Arrays.copyOfRange(v,(int)Math.floor(u/2),u);
-
-                Ordenar_Merge(v_izq); // parte izquierda
-                Ordenar_Merge(v_der); // parte derecha
-                mezclar(v_izq,v_der);       // ordena
-
+                Ordenar_Merge(v,ini,((fin+ini)/2)); // parte izquierda
+                Ordenar_Merge(v,((fin+ini)/2)+1,fin); // parte derecha
+                int med=(ini+fin)/2;
+                mezclar(v,ini,med,fin); // ordena
             }
         }
 
         public static void main(String arg[]) {
-            int v[]={4,67,3,6,3,5,9,2,4,3,1,2};
 
-            Ordenar_Merge(v);
+            int v[]={3,2,7,1,5};
+            Ordenar_Merge(v,0,4);
         }
 
 }
