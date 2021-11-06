@@ -20,9 +20,9 @@ public class Ejercicio_3 {
 
         }
         int sol;
-        Array aux;
-        if(v[inf]==v[sup])return aux;
-
+        //Array aux;
+       // if(v[inf]==v[sup])return aux;
+        return 5;
     }
 
     public static void main(String[] args) {
