@@ -13,35 +13,34 @@ public class Ejercicio_3C {
 
     public static int busquedaTernaria(int v[],int inf,int sup,int x) {
 
-        int tercio1 = (inf +((sup-inf)/ 3));
-        int tercio2 = (sup -((sup-inf)/ 3));
+        int tercio1 = (inf +((sup-inf)/ 3)); //es el primer tercio del vector
+        int tercio2 = (sup -((sup-inf)/ 3)); //es el segundo tercio del vector
 
         comparacionesT++;
         comparacionesT++;
-
-        if (v[tercio1] != x && v[tercio2] != x && inf<sup) { //3 comparaciones
+        if (v[tercio1] != x && v[tercio2] != x && inf<sup) { //se busca por 3 partes(medio-izq,medio,medio-der)
             comparacionesT=comparacionesT+3;
-
-            if (x < v[tercio1]) { //comparacion
+            if (x < v[tercio1]) {
                 comparacionesT++;
-                return busquedaTernaria(v, inf, tercio1, x);
-            } else if (x < v[tercio2]) { //comparacion
+                return busquedaTernaria(v, inf, tercio1, x); //busca por medio-izquieda
+            } else if (x < v[tercio2]) {
                 comparacionesT++;
-                return busquedaTernaria(v, tercio1+1, tercio2-1, x);
+                return busquedaTernaria(v, tercio1+1, tercio2-1, x); //busca por medio
             } else
-                return busquedaTernaria(v, tercio2, sup, x);
+                return busquedaTernaria(v, tercio2, sup, x); //busca por medio-derecha
         }
-
         int solucion=-1;
         comparacionesT++;
-
-        if(v[tercio1]==x)solucion=v[tercio1];
-        else if(v[tercio2]==x)solucion=v[tercio2];
-        comparacionesT++;
-        comparacionesT++;
-        comparacionesT++;
-        comparacionesT++;
-
+        if(v[tercio1]==x){
+            solucion=v[tercio1];
+            comparacionesT++;
+            comparacionesT++;
+        }
+        else if(v[tercio2]==x){
+            solucion=v[tercio2];
+            comparacionesT++;
+            comparacionesT++;
+        }
         return solucion;
     }
 
