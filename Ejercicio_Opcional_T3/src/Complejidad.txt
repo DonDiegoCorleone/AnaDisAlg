@@ -1,0 +1,3 @@
+La complejidad de mi solucion será de n^2 en el peor de los casos ya que compará
+todos los elementos. Sin embargo en el mejor caso será de n*logn ya que
+no habrá hecho todas las ordenaciones del vector.

@@ -5,15 +5,38 @@
 
 import java.util.Scanner;
 
-public final class BuscaElem{
+public final class BuscaElem extends Ordenacion{
+
+
+	public static <T extends Comparable<? super T>> int partir(T v[], T pivote, int izq, int der) {
+		int pivoteT=izq;
+		int i=izq+1;
+		int j=der;
+
+		while(i<j) {
+			while(v[j].compareTo(v[pivoteT])>0)j--;
+			while(v[i].compareTo(v[pivoteT])<0)i++;
+
+			if(i<j)intercambiar(v,i,j);
+		}
+		if(v[pivoteT].compareTo(v[j])>0)intercambiar(v,pivoteT,j);
+
+		return j;
+	}
 	
 	public static <T extends Comparable<? super T>> T kesimo(T v[], int k) {
 		return kesimoRec(v,0,v.length-1,k);
 	}
 
 	public static <T extends Comparable<? super T>> T kesimoRec(T v[], int izq, int der, int k) {
-		// A IMPLEMENTAR POR EL ALUMNO
-		return v[0];
+		int s=partir(v,null,izq,der);
+		if(k==s){
+			return v[k];
+		}else if(k<s){
+			return kesimoRec(v,izq,s-1,k);
+		}else{
+			return kesimoRec(v,s+1,der,k);
+		}
     }
 	
 	

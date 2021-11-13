@@ -1,13 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
-// ALUMNO:
-// GRUPO:
+// ALUMNO:DIEGO CENTENO LINARES
+// GRUPO:2ºE
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class OrdenacionJava extends Ordenacion {
-    
+
+
 	
-   public static <T extends Comparable<? super T>> void ordenar(T v[]) {
-        // A implementar por el alumno
+   public static <T extends Comparable<? super T>> void ordenar(T v[]){
+	   Arrays.sort(v);
    }
 
 

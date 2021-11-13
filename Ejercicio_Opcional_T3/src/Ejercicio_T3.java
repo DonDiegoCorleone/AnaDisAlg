@@ -32,13 +32,13 @@ public class Ejercicio_T3 {
         }else if(k<s){
             return kesimoElem(v,izq,s-1,k);
         }else{
-            return kesimoElem(v,s+1,izq,k);
+            return kesimoElem(v,s+1,der,k);
         }
     }
 
     public static void main(String[] args) {
         int v[]={4,6,2,7,5,3,1};
-        int k=3;
+        int k=5;
         System.out.print(kesimoElem(v,0,v.length-1,k-1));
     }
 }
