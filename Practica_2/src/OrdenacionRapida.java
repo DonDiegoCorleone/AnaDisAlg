@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 // ALUMNO:DIEGO CENTENO LINARES
-// GRUPO:2ºE
+// GRUPO:2ï¿½E
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 public class OrdenacionRapida extends Ordenacion {
@@ -9,17 +9,8 @@ public class OrdenacionRapida extends Ordenacion {
 		ordRapidaRec(v, 0, v.length-1);
 	}
 
-	public static void intercambiar(int[] a,int p,int d) {
-
-		int aux = a[p];
-		a[p] = a[d];
-		a[d] = aux;
-	}
-
-
-
 	// Debe ordenar ascendentemente los primeros @n elementos del vector @v con
-	// una implementación recursiva del método de ordenación rápida.
+	// una implementaciï¿½n recursiva del mï¿½todo de ordenaciï¿½n rï¿½pida.
 	public static <T extends Comparable<? super T>> void ordRapidaRec(T v[], int izq, int der) {
 
 
@@ -28,37 +19,39 @@ public class OrdenacionRapida extends Ordenacion {
 		int sup=der;
 
 		if(inf<sup) { 	//como se va a partir el vector,
-						//en el momento que la posición inf supere sup es que
+						//en el momento que la posiciï¿½n inf supere sup es que
 						//se ha partido del todo el vector
 
 
 
-			int s=partir(v,null,inf,sup); //ignoramos T pivote
-			//y mi función partir devolvera
+			int s = partir(v,v[izq],inf,sup); //ignoramos T pivote
+			//y mi funciï¿½n partir devolvera
 			//la nueva pos del pivote
-			ordRapidaRec(v,inf,s-1);
+			ordRapidaRec(v,inf,s);
 			ordRapidaRec(v,s+1,sup);
 		}
 
 	}
 
 	public static <T extends Comparable<? super T>> int partir(T v[], T pivote, int izq, int der) {
-		int pivoteT=izq;
-		int i=izq+1;
-		int j=der;
+		//int pivoteT=izq;
+		int i=izq-1;
+		int j=der+1;
 
+		// TODO - Corregir Ã­ndices del array
 		while(i<j) {
-			while(v[j].compareTo(v[pivoteT])>0)j--;
-			while(v[i].compareTo(v[pivoteT])<0)i++;
+			j--;
+			while(v[j].compareTo(pivote)>0)j--;
+			i++;
+			while(v[i].compareTo(pivote)<0)i++;
 
 			if(i<j)intercambiar(v,i,j);
 		}
-		if(v[pivoteT].compareTo(v[j])>0)intercambiar(v,pivoteT,j);
 
 		return j;
 	}
 
-	// Pequeños ejemplos para pruebas iniciales.
+	// Pequeï¿½os ejemplos para pruebas iniciales.
 	public static void main (String args[]) {
 
 		// Un vector de enteros
