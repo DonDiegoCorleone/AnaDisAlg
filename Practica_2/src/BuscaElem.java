@@ -29,15 +29,19 @@ public final class BuscaElem extends Ordenacion{
 	}
 
 	public static <T extends Comparable<? super T>> T kesimoRec(T v[], int izq, int der, int k) {
-		int s=partir(v,null,izq,der);
-		if(k==s){
-			return v[k];
-		}else if(k<s){
-			return kesimoRec(v,izq,s-1,k);
-		}else{
-			return kesimoRec(v,s+1,der,k);
+		if (izq < der) {
+			int s = OrdenacionRapida.partir(v, v[izq], izq, der);
+			if (k == s) {
+				return v[k];
+			} else if (k < s) {
+				return kesimoRec(v, izq, s - 1, k);
+			} else {
+				return kesimoRec(v, s + 1, der, k);
+			}
 		}
-    }
+		return v[k];
+	}
+
 	
 	
 	/**
