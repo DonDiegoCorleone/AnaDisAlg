@@ -27,26 +27,25 @@ public class OrdenacionRapida extends Ordenacion {
 			int s = partir(v,v[izq],inf,sup); //ignoramos T pivote
 			//y mi funci�n partir devolvera
 			//la nueva pos del pivote
-			ordRapidaRec(v,inf,s);
+			ordRapidaRec(v,inf,s-1);
 			ordRapidaRec(v,s+1,sup);
 		}
 
 	}
 
 	public static <T extends Comparable<? super T>> int partir(T v[], T pivote, int izq, int der) {
-		//int pivoteT=izq;
-		int i=izq-1;
-		int j=der+1;
 
-		// TODO - Corregir índices del array
+
+		int i=izq;
+		int j=der;
+
 		while(i<j) {
-			j--;
-			while(v[j].compareTo(pivote)>0)j--;
-			i++;
-			while(v[i].compareTo(pivote)<0)i++;
+			while(v[j].compareTo(pivote)>0 && j>0)j--;
+			while(v[i].compareTo(pivote)<=0 && i<v.length-1)i++;
 
 			if(i<j)intercambiar(v,i,j);
 		}
+		if(pivote.compareTo(v[j])>0)intercambiar(v,izq,j);
 
 		return j;
 	}
@@ -55,7 +54,7 @@ public class OrdenacionRapida extends Ordenacion {
 	public static void main (String args[]) {
 
 		// Un vector de enteros
-		Integer vEnt[] = {3,8,6,5,2,9,1,1,4};
+		Integer vEnt[] = {3,8,6,5,2};
 		ordenar(vEnt);
 		System.out.println(vectorAString(vEnt));
 
